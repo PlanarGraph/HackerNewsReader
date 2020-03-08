@@ -1,0 +1,92 @@
+name:                hacker-news
+version:             0.1.0.0
+-- synopsis:
+-- description:
+homepage:            https://github.com/PlanarGraph/hacker-news#readme
+license:             BSD3
+license-file:        LICENSE
+author:              Nolan Tiffney
+maintainer:          nolantiffney@gmail.com
+copyright:           2020 Nolan Tiffney
+category:            Web
+build-type:          Simple
+extra-source-files:  README.md
+cabal-version:       >=1.10
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     HackerNewsReader
+                     , HackerNewsReader.Item
+                     , HackerNewsReader.User
+                     , HackerNewsReader.Effects.API
+                     , HackerNewsReader.UI.FrontPage
+                     , HackerNewsReader.UI.Post
+                     , HackerNewsReader.Effects.UI
+                     , HackerNewsReader.UI.User
+                     , HackerNewsReader.Effects.Stack
+                     , HackerNewsReader.Actions
+  build-depends:       base >= 4.7 && < 5
+                     , aeson
+                     , servant-server
+                     , wai
+                     , warp
+                     , servant-client
+                     , servant
+                     , text
+                     , transformers
+                     , http-client
+                     , http-client-tls
+                     , polysemy >= 1.2.0.0
+                     , polysemy-plugin
+                     , polysemy-zoo >= 0.7.0.0
+                     , containers
+                     , brick
+                     , vty
+                     , lens
+                     , async
+                     , text
+                     , vector
+                     , html-entities >= 1.1.4.3
+  default-language:    Haskell2010
+  default-extensions:  DataKinds
+                     , FlexibleContexts
+                     , GADTs
+                     , LambdaCase
+                     , PolyKinds
+                     , RankNTypes
+                     , ScopedTypeVariables
+                     , TypeApplications
+                     , TypeOperators
+                     , TypeFamilies
+
+executable hacker-news-exe
+  hs-source-dirs:      app
+  main-is:             Main.hs
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N -O2 -flate-specialise -fspecialise-aggressively -fplugin=Polysemy.Plugin
+  build-depends:       base
+                     , hacker-news
+                     , polysemy
+                     , polysemy-plugin
+                     , brick
+                     , vector
+                     , vty
+                     , lens
+                     , async
+  default-language:    Haskell2010
+
+test-suite hacker-news-test
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             Spec.hs
+  build-depends:       base
+                     , hacker-news
+                     , hspec
+                     , hspec-wai
+                     , hspec-wai-json
+                     , aeson
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  default-language:    Haskell2010
+
+source-repository head
+  type:     git
+  location: https://github.com/PlanarGraph/hacker-news
